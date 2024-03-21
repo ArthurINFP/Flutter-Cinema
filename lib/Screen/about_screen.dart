@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AboutScreen extends StatelessWidget {
+  static String screenName = '/LoginScreen';
   const AboutScreen({super.key});
 
   @override
@@ -65,7 +66,6 @@ class AboutTab extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          flex: 7,
           child: SingleChildScrollView(
             child: Column(children: [
               Container(
@@ -78,13 +78,11 @@ class AboutTab extends StatelessWidget {
             ]),
           ),
         ),
-        Expanded(
-            child: Center(
-                child: Container(
+        Container(
           alignment: Alignment.center,
           width: 343,
           height: 56,
-          margin: const EdgeInsets.only(bottom: 16),
+          margin: const EdgeInsets.only(bottom: 24),
           decoration: BoxDecoration(
               color: const Color(0xffFF8036),
               borderRadius: BorderRadius.circular(8)),
@@ -93,7 +91,7 @@ class AboutTab extends StatelessWidget {
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),
           ),
-        )))
+        )
       ],
     );
   }

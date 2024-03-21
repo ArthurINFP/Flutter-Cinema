@@ -1,4 +1,6 @@
-import 'package:cinema/about_screen.dart';
+import 'package:cinema/Screen/about_screen.dart';
+import 'package:cinema/Screen/login_screen.dart';
+import 'package:cinema/themes/theme_data.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,8 +13,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark(),
-      home: const AboutScreen(),
+      theme: darkTheme,
+      darkTheme: darkTheme,
+      home: const LoginScreen(),
     );
   }
 }
