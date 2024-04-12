@@ -1,0 +1,22 @@
+{
+    "login": "Login",
+    "username": "Username",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "orSigninWith": "Or sign in with",
+    "about" : "About",
+    "sessions" : "Sessions",
+    "certificate" : "Certificate",
+    "runtime" : "Runtime",
+    "release" : "Release",
+    "gerne" : "Gerne",
+    "director" : "Director",
+    "cast" : "Cast",
+    "time" : "Time",
+    "byCinema" : "By Cinema",
+    "adult": "Adult",
+    "child": "Child",
+    "student": "Student",
+    "vip": "VIP"
+
+}

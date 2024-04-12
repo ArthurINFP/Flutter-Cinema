@@ -20,6 +20,17 @@ ThemeData darkTheme = ThemeData(
     primaryContainer: Color(0xFF637394),
   ),
 );
+TextTheme textTheme = const TextTheme().copyWith(
+  titleLarge: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+  titleMedium: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  titleSmall: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  labelLarge: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  labelMedium: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+  labelSmall: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+  bodyLarge: const TextStyle(fontSize: 16),
+  bodyMedium: const TextStyle(fontSize: 14),
+  bodySmall: const TextStyle(fontSize: 12),
+);
 
 ThemeData lightTheme = ThemeData(
   useMaterial3: true,

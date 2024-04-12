@@ -1,0 +1,18 @@
+class MovieSessionEntity {
+  DateTime? sessionTime;
+  String? filmFormat;
+  String? theater;
+  double? adultPrice;
+  double? childPrice;
+  double? studentPrice;
+  double? vipPrice;
+  MovieSessionEntity({
+    this.sessionTime,
+    this.filmFormat,
+    this.theater,
+    this.adultPrice,
+    this.childPrice,
+    this.studentPrice,
+    this.vipPrice,
+  });
+}

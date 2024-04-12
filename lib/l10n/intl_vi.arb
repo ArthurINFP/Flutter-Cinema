@@ -1,0 +1,22 @@
+{
+    "login": "Đăng nhập",
+    "username": "Tên tài khoản",
+    "password": "Mật khẩu ",
+    "forgotPassword": "Quên mật khẩu?",
+    "orSigninWith": "hoặc đăng nhập với",
+    "about" : "Thông tin",
+    "sessions" : "Thời gian",
+    "certificate" : "Phân loại",
+    "runtime" : "Thời lượng",
+    "release" : "Ra mắt",
+    "gerne" : "Thể loại",
+    "director" : "Đạo diễn",
+    "cast" : "Diễn viên",
+    "time": "Thời gian",
+    "byCinema" : "Theo rạp",
+    "adult": "Người lớn",
+    "child": "Trẻ em",
+    "student": "Học sinh",
+    "vip": "VIP"
+    
+}

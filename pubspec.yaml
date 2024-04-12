@@ -10,14 +10,36 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.10+1
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  flutter_bloc: ^8.1.5
+  flutter_easyloading: ^3.0.5
+  carousel_slider: ^4.2.1
+  firebase_core: ^2.27.0
+  smooth_page_indicator: ^1.1.0
+  firebase_auth: ^4.17.8
+  google_sign_in: ^6.2.1
+  adaptive_dialog: ^2.1.0
+  json_annotation: ^4.8.1
+  dio: ^5.4.2+1
+  flutter_dotenv: ^5.1.0
+  retrofit: ^4.1.0
+  retrofit_generator: ^8.1.0
+  youtube_player_flutter: ^9.0.0
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.9
 
 flutter:
   uses-material-design: true
   assets:
+    - myAPIKey.env
     - assets/
     - assets/icons/
+    - assets/svg/
