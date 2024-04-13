@@ -115,9 +115,27 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
                     return SvgPicture.asset(Assets.svg.icEmptyPopcon);
                   }
                 }),
-                SessionTab(
-                  movieId: widget.args,
-                )
+                BlocBuilder<MovieDetailBloc, MovieDetailState>(
+                    builder: (context, state) {
+                  if (state is SuccessMovieDetailState) {
+                    return SessionTab(
+                      movieId: widget.args,
+                      movieDetailEntity: state.movieDetailEntity,
+                    );
+                  } else if (state is SuccessMovieSessionSate) {
+                    if (movieDetailEntity != null) {
+                      return SessionTab(
+                        movieId: widget.args,
+                        movieDetailEntity: movieDetailEntity!,
+                      );
+                    }
+                    return SvgPicture.asset(Assets.svg.icEmptyPopcon);
+                  } else if (state is FailedMovieDetailState) {
+                    return SvgPicture.asset(Assets.svg.icEmptyPopcon);
+                  } else {
+                    return SvgPicture.asset(Assets.svg.icEmptyPopcon);
+                  }
+                }),
               ]),
             )));
   }

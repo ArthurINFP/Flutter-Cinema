@@ -7,14 +7,17 @@ class CustomizeButton extends StatelessWidget {
   String? text;
   Color? backgroundColor;
   double? borderRadius;
-
+  double? height;
+  double? widget;
   CustomizeButton({
     Key? key,
-    this.text,
     this.onPressed,
     this.textStyle,
+    this.text,
     this.backgroundColor,
     this.borderRadius,
+    this.height,
+    this.widget,
   }) : super(key: key);
 
   @override
@@ -22,19 +25,23 @@ class CustomizeButton extends StatelessWidget {
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(right: 8),
-      child: ElevatedButton(
-          onPressed: onPressed,
-          style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(
-                  backgroundColor ?? theme.colorScheme.primary),
-              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(borderRadius ?? 8)))),
-          child: Text(
-            text ?? 'Nhap title',
-            style: textStyle ??
-                const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-          )),
+      child: SizedBox(
+        height: height,
+        width: widget,
+        child: ElevatedButton(
+            onPressed: onPressed,
+            style: ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(
+                    backgroundColor ?? theme.colorScheme.primary),
+                shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(borderRadius ?? 8)))),
+            child: Text(
+              text ?? 'Nhap title',
+              style: textStyle ??
+                  const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+            )),
+      ),
     );
   }
 }

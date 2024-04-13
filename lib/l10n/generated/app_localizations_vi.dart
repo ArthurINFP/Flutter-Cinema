@@ -60,4 +60,25 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get vip => 'VIP';
+
+  @override
+  String get payforticket => 'Thanh toán vé';
+
+  @override
+  String get cinema => 'Rạp phim';
+
+  @override
+  String get date => 'Thời gian';
+
+  @override
+  String get seats => 'Hàng ghế';
+
+  @override
+  String get total => 'Tổng cộng';
+
+  @override
+  String get phonenumber => 'Số điện thoại';
+
+  @override
+  String get continueword => 'Tiếp tục';
 }

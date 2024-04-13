@@ -91,11 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _buildAppBarInfoItem(assets: Assets.svg.icLocation, label: 'TP.HCM'),
         _buildAppBarInfoItem(assets: Assets.svg.icLanguage, label: 'Eng'),
         CustomizeButton(
-          onPressed: () {
-            // Navigator.pushNamed(context, MovieDetailScreenRoute.screenName,
-            //     arguments: movieId.toString());
-            Navigator.pushNamed(context, TestScreen.screenName);
-          },
+          onPressed: () {},
           text: 'Profile',
         )
       ],

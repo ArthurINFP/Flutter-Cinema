@@ -17,6 +17,12 @@
     "adult": "Người lớn",
     "child": "Trẻ em",
     "student": "Học sinh",
-    "vip": "VIP"
-    
+    "vip": "VIP",
+    "payforticket" : "Thanh toán vé",
+    "cinema" : "Rạp phim",
+    "date" : "Thời gian",
+    "seats" : "Hàng ghế",
+    "total" : "Tổng cộng",
+    "phonenumber" : "Số điện thoại",
+    "continueword" : "Tiếp tục"
 }

@@ -17,6 +17,12 @@
     "adult": "Adult",
     "child": "Child",
     "student": "Student",
-    "vip": "VIP"
-
+    "vip": "VIP",
+    "payforticket" : "Pay For Ticket",
+    "cinema" : "Cinema",
+    "date" : "Date",
+    "seats" : "seats",
+    "total" : "Totals",
+    "phonenumber" : "Phone number",
+    "continueword" : "Continue" 
 }

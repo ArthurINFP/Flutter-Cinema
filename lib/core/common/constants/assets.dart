@@ -15,6 +15,9 @@ class SvgAssets {
   final String icEmptyPopcon = 'assets/svg/EmptyPopcon.svg';
   final String icCalendar = 'assets/svg/Calendar.svg';
   final String icSort = 'assets/svg/Sort.svg';
+  final String icLeftHalfEllipse = 'assets/svg/LeftHalfEllipse.svg';
+  final String icRightHalfEllipse = 'assets/svg/RightHalfEllipse.svg';
+  final String icEllipse = 'assets/svg/Ellipse.svg';
 }
 
 class ImageAssets {

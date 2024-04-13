@@ -60,4 +60,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vip => 'VIP';
+
+  @override
+  String get payforticket => 'Pay For Ticket';
+
+  @override
+  String get cinema => 'Cinema';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get seats => 'seats';
+
+  @override
+  String get total => 'Totals';
+
+  @override
+  String get phonenumber => 'Phone number';
+
+  @override
+  String get continueword => 'Continue';
 }

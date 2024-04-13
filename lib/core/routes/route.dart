@@ -7,6 +7,9 @@ import 'package:cinema/core/features/login/presentation/views/login_screen.dart'
 import 'package:cinema/core/features/movie_detail/movie_detail_screen_route.dart';
 import 'package:cinema/core/features/movie_detail/presentation/bloc/movie_detail_bloc.dart';
 import 'package:cinema/core/features/movie_detail/presentation/views/movie_detail_screen.dart';
+import 'package:cinema/core/features/ticket/domain/entities/ticket_entity.dart';
+import 'package:cinema/core/features/ticket/payment_confirm_screen_route.dart';
+import 'package:cinema/core/features/ticket/presentation/views/payment_confirm_screen.dart';
 import 'package:cinema/core/utils/testScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,6 +47,16 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) {
             return const TestScreen();
+          },
+        );
+      case PaymentConfirmScreenRoute.screenName:
+        final args = setting.arguments as TicketEntity;
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider(
+              create: (context) => MovieDetailBloc(),
+              child: PaymentConfirmScreen(entity: args),
+            );
           },
         );
       default:

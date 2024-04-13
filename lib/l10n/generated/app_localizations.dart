@@ -206,6 +206,48 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'VIP'**
   String get vip;
+
+  /// No description provided for @payforticket.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thanh toán vé'**
+  String get payforticket;
+
+  /// No description provided for @cinema.
+  ///
+  /// In vi, this message translates to:
+  /// **'Rạp phim'**
+  String get cinema;
+
+  /// No description provided for @date.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thời gian'**
+  String get date;
+
+  /// No description provided for @seats.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hàng ghế'**
+  String get seats;
+
+  /// No description provided for @total.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tổng cộng'**
+  String get total;
+
+  /// No description provided for @phonenumber.
+  ///
+  /// In vi, this message translates to:
+  /// **'Số điện thoại'**
+  String get phonenumber;
+
+  /// No description provided for @continueword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tiếp tục'**
+  String get continueword;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
