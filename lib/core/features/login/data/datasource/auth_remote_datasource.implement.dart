@@ -1,5 +1,6 @@
 import 'package:cinema/core/features/login/data/datasource/auth_remote_datasource.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRemoteDataSorceImplement extends AuthRemoteDataSource {
@@ -28,5 +29,10 @@ class AuthRemoteDataSorceImplement extends AuthRemoteDataSource {
     final userCredential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: username, password: password);
     return userCredential;
+  }
+
+  @override
+  User? getCurrentUserInfo() {
+    return FirebaseAuth.instance.currentUser;
   }
 }

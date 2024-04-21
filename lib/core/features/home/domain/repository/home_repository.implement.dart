@@ -7,11 +7,18 @@ import 'package:cinema/main.dart';
 
 class HomeRepositoryImplement extends HomeRepository {
   HomeRemoteDatasource repository = HomeRemoteDatasourceImplement();
-  // final HomeRestApi api = HomeRestApi(dioClient.dio);
+  final HomeRestApi api = HomeRestApi(dioClient.dio);
   @override
-  Future<List<Movie>?> getUpcomingMovies() {
+  Future<List<Movie>?> getNowPlayingMovies() async {
     // via Dio
-    return repository.getUpcomingMovies();
-    // return api.getUpcomingMovies();
+    // return repository.getUpcomingMovies();
+    final response = await api.getNowPlayingMovies();
+    return response.results;
+  }
+
+  @override
+  Future<List<Movie>?> getUpcomingMovies() async {
+    final response = await api.getUpcomingMovies();
+    return response.results;
   }
 }

@@ -1,3 +1,7 @@
+import 'package:cinema/core/features/account/presentation/account_screen_route.dart';
+import 'package:cinema/core/features/account/presentation/bloc/account_bloc.dart';
+import 'package:cinema/core/features/account/presentation/bloc/account_event.dart';
+import 'package:cinema/core/features/account/presentation/views/account_screen.dart';
 import 'package:cinema/core/features/home/home_screen_route.dart';
 import 'package:cinema/core/features/home/presentation/bloc/home_bloc.dart';
 import 'package:cinema/core/features/home/presentation/views/home_screen.dart';
@@ -8,8 +12,9 @@ import 'package:cinema/core/features/movie_detail/movie_detail_screen_route.dart
 import 'package:cinema/core/features/movie_detail/presentation/bloc/movie_detail_bloc.dart';
 import 'package:cinema/core/features/movie_detail/presentation/views/movie_detail_screen.dart';
 import 'package:cinema/core/features/ticket/domain/entities/ticket_entity.dart';
-import 'package:cinema/core/features/ticket/payment_confirm_screen_route.dart';
-import 'package:cinema/core/features/ticket/presentation/views/payment_confirm_screen.dart';
+import 'package:cinema/core/features/ticket/presentation/bloc/ticket_bloc.dart';
+import 'package:cinema/core/features/ticket/ticket_screen_route.dart';
+import 'package:cinema/core/features/ticket/presentation/views/ticket_screen.dart';
 import 'package:cinema/core/utils/testScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +26,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider(
-                create: (context) => LoginBloc(), child: LoginScreen());
+                create: (context) => LoginBloc(), child: const LoginScreen());
           },
         );
       case HomeScreenRoute.screenName:
@@ -49,20 +54,32 @@ class RouteGenerator {
             return const TestScreen();
           },
         );
-      case PaymentConfirmScreenRoute.screenName:
+      case TicketScreenRoute.screenName:
         final args = setting.arguments as TicketEntity;
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider(
-              create: (context) => MovieDetailBloc(),
-              child: PaymentConfirmScreen(entity: args),
+              create: (context) => TicketBloc(),
+              child: TicketScreen(entity: args),
+            );
+          },
+        );
+      case AccountScreenRoute.screenName:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider(
+              create: (context) => AccountBloc(),
+              child: const AccountScreen(),
             );
           },
         );
       default:
         return MaterialPageRoute(
           builder: (context) {
-            return HomeScreen();
+            return BlocProvider(
+              create: (context) => HomeBloc(),
+              child: HomeScreen(),
+            );
           },
         );
     }

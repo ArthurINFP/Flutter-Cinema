@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cinema/core/common/constants/assets.dart';
 import 'package:cinema/core/features/home/home_screen_route.dart';
@@ -14,8 +12,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatefulWidget {
-  static String screenName = '/LoginScreen';
-
   const LoginScreen({super.key});
 
   @override
@@ -43,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context: context,
             message: "Đăng nhập thành công",
           );
+          Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacementNamed(context, HomeScreenRoute.screenName);
         } else if (state is FailedLoginState) {
           EasyLoading.dismiss();

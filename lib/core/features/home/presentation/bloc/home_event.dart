@@ -2,4 +2,4 @@
 
 abstract class HomeEvent {}
 
-class GetUpcomingMovieEvent extends HomeEvent {}
+class GetUpcomingAndNowPlayingMovieEvent extends HomeEvent {}

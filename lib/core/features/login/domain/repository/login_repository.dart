@@ -6,4 +6,5 @@ abstract class LoginRepository {
 
   Future<UserCredential?> signInWithGoogle();
   Future<UserCredential?> signInWithFacebook();
+  User? getCurrentUserInfo();
 }

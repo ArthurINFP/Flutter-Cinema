@@ -22,4 +22,9 @@ class LoginRepositoryImplement extends LoginRepository {
     return dataSource.signInWithUsernamePassword(
         username: username, password: password);
   }
+
+  @override
+  User? getCurrentUserInfo() {
+    return dataSource.getCurrentUserInfo();
+  }
 }

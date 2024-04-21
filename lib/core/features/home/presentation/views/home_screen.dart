@@ -3,6 +3,11 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cinema/core/features/account/presentation/account_screen_route.dart';
+import 'package:cinema/core/features/login/presentation/login_screen_route.dart';
+import 'package:cinema/core/features/login/presentation/views/login_screen.dart';
+import 'package:cinema/core/utils/localizations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -26,36 +31,38 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late ThemeData theme;
-  late HomeBloc bloc;
-  List<Movie> movies = [];
+  ThemeData get theme => Theme.of(context);
+  HomeBloc get bloc => BlocProvider.of<HomeBloc>(context);
+
+  @override
+  void initState() {
+    super.initState();
+    bloc.add(GetUpcomingAndNowPlayingMovieEvent());
+  }
+
+  void signOutUser() async {
+    print("Sign-out");
+    await FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
-    bloc = BlocProvider.of<HomeBloc>(context);
-    theme = Theme.of(context);
-    if (movies.isEmpty) {
-      bloc.add(GetUpcomingMovieEvent());
-    }
-
-    return BlocConsumer<HomeBloc, HomeState>(
-      listener: (context, state) {
-        if (state is LoadingHomeState) {
-          EasyLoading.show();
-        } else if (state is SuccessfulHomeState) {
-          EasyLoading.dismiss();
-          movies = state.movies;
-        } else if (state is FailedHomeState) {
-          EasyLoading.dismiss();
-          showOkAlertDialog(context: context, message: state.message);
-        } else {
-          EasyLoading.dismiss();
-          showOkAlertDialog(context: context, message: 'Something went wrong');
-        }
-      },
-      builder: (context, state) {
-        print("Build Whole Screen");
-        return Scaffold(
+    return BlocListener<HomeBloc, HomeState>(
+        listener: (context, state) {
+          if (state is LoadingHomeState) {
+            EasyLoading.show();
+          } else if (state is SuccessfulHomeState) {
+            EasyLoading.dismiss();
+          } else if (state is FailedHomeState) {
+            EasyLoading.dismiss();
+            showOkAlertDialog(context: context, message: state.message);
+          } else {
+            EasyLoading.dismiss();
+            showOkAlertDialog(
+                context: context, message: 'Something went wrong');
+          }
+        },
+        child: Scaffold(
           backgroundColor: theme.colorScheme.surface,
           body: SafeArea(
             bottom: false,
@@ -68,8 +75,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: theme.colorScheme.background,
                       child: Column(
                         children: [
-                          _buildUpcomingCarousel(movies: movies),
-                          _buildNowInCinemaGridView()
+                          BlocBuilder<HomeBloc, HomeState>(
+                            builder: (context, state) {
+                              if (state is LoadingHomeState) {
+                                return Container();
+                              } else if (state is SuccessfulHomeState) {
+                                return _buildUpcomingCarousel(
+                                    upComingMovies: state.upComingMovies);
+                              } else {
+                                return SvgPicture.asset(
+                                    Assets.svg.icEmptyPopcon);
+                              }
+                            },
+                          ),
+                          BlocBuilder<HomeBloc, HomeState>(
+                            builder: (context, state) {
+                              if (state is LoadingHomeState) {
+                                return Container();
+                              } else if (state is SuccessfulHomeState) {
+                                return _buildNowInCinemaGridView(
+                                    nowPlayingMovies: state.nowPlayingMovies);
+                              } else {
+                                return SvgPicture.asset(
+                                    Assets.svg.icEmptyPopcon);
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -78,23 +109,60 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-        );
-      },
-    );
+        ));
   }
 
   Widget _buildAppBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SvgPicture.asset(Assets.svg.icProductLogo),
-        _buildAppBarInfoItem(assets: Assets.svg.icLocation, label: 'TP.HCM'),
-        _buildAppBarInfoItem(assets: Assets.svg.icLanguage, label: 'Eng'),
-        CustomizeButton(
-          onPressed: () {},
-          text: 'Profile',
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SvgPicture.asset(Assets.svg.icProductLogo),
+          _buildAppBarInfoItem(assets: Assets.svg.icLocation, label: 'TP.HCM'),
+          GestureDetector(
+              onTap: () {
+                signOutUser();
+              },
+              child: _buildAppBarInfoItem(
+                  assets: Assets.svg.icLanguage, label: 'Eng')),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is SuccessfulHomeState) {
+                if (state.user != null) {
+                  return GestureDetector(
+                    onTap: () => Navigator.pushNamed(
+                        context, AccountScreenRoute.screenName),
+                    child: CircleAvatar(
+                      radius: 24,
+                      backgroundImage: (state.user!.photoURL != null)
+                          ? Image.network(
+                              state.user!.photoURL!,
+                              fit: BoxFit.fill,
+                            ).image
+                          : null,
+                      child: (state.user!.photoURL != null)
+                          ? null
+                          : const Icon(
+                              Icons.account_circle,
+                              size: 34,
+                            ),
+                    ),
+                  );
+                }
+              }
+              return GestureDetector(
+                child: CustomizeButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, LoginScreenRoute.screenName);
+                  },
+                  text: translates(context).login,
+                ),
+              );
+            },
+          )
+        ],
+      ),
     );
   }
 
@@ -110,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildNowInCinemaGridView() {
+  Widget _buildNowInCinemaGridView({required List<Movie> nowPlayingMovies}) {
     print("Building Gridview");
     return Column(
       children: [
@@ -119,9 +187,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Now in Cinema',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Text(
+                translates(context).nowincinemas,
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SvgPicture.asset(Assets.svg.icSearch)
             ],
@@ -132,65 +201,84 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisCount: 2,
             childAspectRatio: 0.65,
           ),
-          itemCount: movies.length,
+          itemCount: nowPlayingMovies.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, MovieDetailScreenRoute.screenName,
-                    arguments: movies[index].id.toString());
-              },
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: CachedNetworkImage(
-                      imageUrl: movies[index].posterUrl,
-                      width: 190,
-                      memCacheHeight: 400,
-                      height: 260,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                  Container(
-                    width: 163,
-                    child: Text(
-                      movies[index].title ?? "No title",
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      style: theme.textTheme.titleMedium
-                          ?.copyWith(color: Colors.white),
-                    ),
-                  ),
-                  Text(
-                    movies[index].genre?.first ?? "No genre",
-                    maxLines: 1,
-                    style: theme.textTheme.bodyMedium
-                        ?.copyWith(color: Colors.white),
-                  )
-                ],
-              ),
-            );
+            return _buildGridviewItem(context, nowPlayingMovies, index);
           },
         )
       ],
     );
   }
+
+  Widget _buildGridviewItem(
+      BuildContext context, List<Movie> nowPlayingMovies, int index) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, MovieDetailScreenRoute.screenName,
+            arguments: nowPlayingMovies[index].id.toString());
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            clipBehavior: Clip.hardEdge,
+            child: Stack(alignment: const Alignment(0.9, -0.95), children: [
+              CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: nowPlayingMovies[index].posterUrl,
+                width: 180,
+                memCacheHeight: 400,
+                height: 265,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+              (nowPlayingMovies[index].voteAverage != null)
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                          color: theme.colorScheme.primary,
+                          borderRadius: BorderRadius.circular(4)),
+                      child: Text(
+                        nowPlayingMovies[index].voteAverage!.toStringAsFixed(1),
+                        style: theme.textTheme.bodySmall!
+                            .copyWith(fontWeight: FontWeight.w700),
+                      ),
+                    )
+                  : const Placeholder(),
+            ]),
+          ),
+          Container(
+            width: 163,
+            child: Text(
+              nowPlayingMovies[index].title ?? "No title",
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
+            ),
+          ),
+          Text(
+            nowPlayingMovies[index].genre?.first ?? "No genre",
+            maxLines: 1,
+            style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
+          )
+        ],
+      ),
+    );
+  }
 }
 
 class _buildUpcomingCarousel extends StatefulWidget {
-  final List<Movie> movies;
+  final List<Movie> upComingMovies;
   const _buildUpcomingCarousel({
     Key? key,
-    required this.movies,
+    required this.upComingMovies,
   }) : super(key: key);
 
   @override
@@ -205,16 +293,17 @@ class _buildUpcomingCarouselState extends State<_buildUpcomingCarousel> {
   Widget build(BuildContext context) {
     print("Build carousel");
     theme = Theme.of(context);
-    movies = widget.movies;
+    movies = widget.upComingMovies;
     return Column(
       children: [
-        const Row(
+        Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 16),
+              padding: const EdgeInsets.only(left: 16),
               child: Text(
-                'Upcoming',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                translates(context).upcoming,
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
           ],

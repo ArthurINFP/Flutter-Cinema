@@ -6,4 +6,5 @@ abstract class LoginUsecase {
 
   Future<User?> signInWithGoogle();
   Future<User?> signInWithFacebook();
+  User? getCurrentUserInfo();
 }

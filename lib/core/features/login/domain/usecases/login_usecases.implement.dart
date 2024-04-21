@@ -24,4 +24,9 @@ class LoginUsecaseImplement extends LoginUsecase {
         username: username, password: password);
     return userCredential?.user;
   }
+
+  @override
+  User? getCurrentUserInfo() {
+    return repository.getCurrentUserInfo();
+  }
 }

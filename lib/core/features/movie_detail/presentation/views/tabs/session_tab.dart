@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cinema/core/features/ticket/domain/entities/ticket_entity.dart';
-import 'package:cinema/core/features/ticket/payment_confirm_screen_route.dart';
+import 'package:cinema/core/features/ticket/ticket_screen_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -214,7 +214,7 @@ class _SessionTabState extends State<SessionTab> {
           seats: ["F0", "F1"],
           unitPrice: entity.adultPrice,
         );
-        Navigator.pushNamed(context, PaymentConfirmScreenRoute.screenName,
+        Navigator.pushNamed(context, TicketScreenRoute.screenName,
             arguments: ticketEntity);
       },
       child: Container(

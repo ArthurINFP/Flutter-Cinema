@@ -9,7 +9,7 @@ import 'package:cinema/core/features/home/data/remote/remote_datasource.dart';
 
 class HomeRemoteDatasourceImplement extends HomeRemoteDatasource {
   @override
-  Future<List<Movie>?> getUpcomingMovies() async {
+  Future<List<Movie>?> getNowPlayingMovies() async {
     final result = await dioClient.dio.get('/movie/now_playing');
     final responseJson = result.data as Map<String, dynamic>;
     final response = MovieResponse.fromJson(responseJson);

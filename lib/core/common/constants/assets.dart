@@ -18,6 +18,7 @@ class SvgAssets {
   final String icLeftHalfEllipse = 'assets/svg/LeftHalfEllipse.svg';
   final String icRightHalfEllipse = 'assets/svg/RightHalfEllipse.svg';
   final String icEllipse = 'assets/svg/Ellipse.svg';
+  final String icFlagsVN = 'assets/svg/icFlagsVN.svg';
 }
 
 class ImageAssets {

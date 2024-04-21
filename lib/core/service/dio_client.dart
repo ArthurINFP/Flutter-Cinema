@@ -15,12 +15,12 @@ class DioClient {
         options.queryParameters.addAll({'api_key': DotEnvUtils.apiKey});
         return handler.next(options);
       },
-      onResponse: (response, handler) {
-        return handler.next(response);
-      },
-      onError: (error, handler) {
-        return handler.next(error);
-      },
+      // onResponse: (response, handler) {
+      //   return handler.next(response);
+      // },
+      // onError: (error, handler) {
+      //   return handler.next(error);
+      // },
     ));
   }
 }

@@ -6,4 +6,5 @@ abstract class AuthRemoteDataSource {
 
   Future<UserCredential?> signInWithGoogle();
   Future<UserCredential?> signInWithFacebook();
+  User? getCurrentUserInfo();
 }

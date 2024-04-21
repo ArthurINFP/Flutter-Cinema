@@ -248,6 +248,150 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Tiếp tục'**
   String get continueword;
+
+  /// No description provided for @nowincinemas.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phim đang chiếu'**
+  String get nowincinemas;
+
+  /// No description provided for @upcoming.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phim sắp chiếu'**
+  String get upcoming;
+
+  /// No description provided for @profile.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tài khoản '**
+  String get profile;
+
+  /// No description provided for @fullname.
+  ///
+  /// In vi, this message translates to:
+  /// **'Họ tên'**
+  String get fullname;
+
+  /// No description provided for @dateofbirth.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngày sinh'**
+  String get dateofbirth;
+
+  /// No description provided for @email.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @gender.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giới tính'**
+  String get gender;
+
+  /// No description provided for @male.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nam'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nữ'**
+  String get female;
+
+  /// No description provided for @other.
+  ///
+  /// In vi, this message translates to:
+  /// **'Khác'**
+  String get other;
+
+  /// No description provided for @city.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thành phố'**
+  String get city;
+
+  /// No description provided for @language.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngôn ngữ'**
+  String get language;
+
+  /// No description provided for @receivenotifications.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhận thông báo'**
+  String get receivenotifications;
+
+  /// No description provided for @infomation.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thông tin'**
+  String get infomation;
+
+  /// No description provided for @save.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu'**
+  String get save;
+
+  /// No description provided for @settings.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cài đặt'**
+  String get settings;
+
+  /// No description provided for @savedcards.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thẻ đã lưu'**
+  String get savedcards;
+
+  /// No description provided for @addnewcard.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm thẻ mới'**
+  String get addnewcard;
+
+  /// No description provided for @paymentshistory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lịch sử thanh toán'**
+  String get paymentshistory;
+
+  /// No description provided for @yourname.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên của bạn'**
+  String get yourname;
+
+  /// No description provided for @youremail.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email của bạn'**
+  String get youremail;
+
+  /// No description provided for @hochiminhcity.
+  ///
+  /// In vi, this message translates to:
+  /// **'TP Hồ Chí Minh'**
+  String get hochiminhcity;
+
+  /// No description provided for @danangcity.
+  ///
+  /// In vi, this message translates to:
+  /// **'TP Đà Nẵng'**
+  String get danangcity;
+
+  /// No description provided for @hanoicity.
+  ///
+  /// In vi, this message translates to:
+  /// **'TP Hà Nội'**
+  String get hanoicity;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

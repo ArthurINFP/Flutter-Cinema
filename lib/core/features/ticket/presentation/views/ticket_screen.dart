@@ -1,25 +1,29 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cinema/core/common/constants/assets.dart';
 import 'package:cinema/core/common/widget/customize_button.dart';
+import 'package:cinema/core/features/ticket/presentation/bloc/ticket_bloc.dart';
+import 'package:cinema/core/features/ticket/presentation/bloc/ticket_event.dart';
 import 'package:cinema/core/utils/localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cinema/core/features/ticket/domain/entities/ticket_entity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
-class PaymentConfirmScreen extends StatefulWidget {
+class TicketScreen extends StatefulWidget {
   TicketEntity entity;
-  PaymentConfirmScreen({
+  TicketScreen({
     Key? key,
     required this.entity,
   }) : super(key: key);
 
   @override
-  State<PaymentConfirmScreen> createState() => _PaymentConfirmScreenState();
+  State<TicketScreen> createState() => _TicketScreenState();
 }
 
-class _PaymentConfirmScreenState extends State<PaymentConfirmScreen> {
+class _TicketScreenState extends State<TicketScreen> {
+  TicketBloc get bloc => BlocProvider.of<TicketBloc>(context);
   TicketEntity get entity => widget.entity;
   ThemeData get theme => Theme.of(context);
   TextStyle? textTitleStyle =
@@ -56,7 +60,9 @@ class _PaymentConfirmScreenState extends State<PaymentConfirmScreen> {
                         child: CustomizeButton(
                           backgroundColor: theme.colorScheme.primary,
                           borderRadius: 8,
-                          onPressed: () {},
+                          onPressed: () {
+                            bloc.add(CreateTicketEvent(entity: entity));
+                          },
                           text: "Continue",
                           height: 56,
                           widget: double.infinity,

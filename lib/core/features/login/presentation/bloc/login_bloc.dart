@@ -17,7 +17,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       UsernamePasswordLoginEvent event, Emitter<LoginState> emit) async {
     emit(LoadingLoginState());
 
-    final LoginUsecase _usecase = LoginUsecaseImplement();
     print('This is login Bloc');
     print(event.username);
     print(event.password);
@@ -39,7 +38,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   FutureOr<void> _onThirdPartyLoginEvent(
       ThirdPartyLoginEvent event, Emitter<LoginState> emit) async {
     emit(LoadingLoginState());
-    await Future.delayed(const Duration(seconds: 3));
     if (event.isGoogle) {
       try {
         final user = await _usecase.signInWithGoogle();

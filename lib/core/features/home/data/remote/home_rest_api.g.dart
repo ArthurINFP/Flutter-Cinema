@@ -19,13 +19,13 @@ class _HomeRestApi implements HomeRestApi {
   String? baseUrl;
 
   @override
-  Future<List<Movie>?> getUpcomingMovies() async {
+  Future<MovieResponse> getNowPlayingMovies() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<List<dynamic>>(_setStreamType<List<Movie>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MovieResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -41,9 +41,34 @@ class _HomeRestApi implements HomeRestApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data
-        ?.map((dynamic i) => Movie.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = MovieResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<MovieResponse> getUpcomingMovies() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<MovieResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/movie/upcoming',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = MovieResponse.fromJson(_result.data!);
     return value;
   }
 

@@ -81,4 +81,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continueword => 'Continue';
+
+  @override
+  String get nowincinemas => 'Now in cinemas';
+
+  @override
+  String get upcoming => 'Upcoming';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get fullname => 'Fullname';
+
+  @override
+  String get dateofbirth => 'Date Of Birth';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get city => 'City';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get receivenotifications => 'Receive Notifications';
+
+  @override
+  String get infomation => 'Infomation';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get savedcards => 'Saved cards';
+
+  @override
+  String get addnewcard => 'Add new card';
+
+  @override
+  String get paymentshistory => 'Payments history';
+
+  @override
+  String get yourname => 'Your name';
+
+  @override
+  String get youremail => 'Your email';
+
+  @override
+  String get hochiminhcity => 'Ho Chi Minh city';
+
+  @override
+  String get danangcity => 'Da Nang city';
+
+  @override
+  String get hanoicity => 'Ha Noi city';
 }
