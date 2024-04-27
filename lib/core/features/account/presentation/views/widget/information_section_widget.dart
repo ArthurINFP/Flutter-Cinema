@@ -1,6 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cinema/core/features/account/presentation/bloc/account_bloc.dart';
-import 'package:cinema/core/features/account/presentation/bloc/account_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,13 +9,17 @@ import 'package:cinema/core/common/enums/city.dart';
 import 'package:cinema/core/common/enums/gender.dart';
 import 'package:cinema/core/common/widget/customize_button.dart';
 import 'package:cinema/core/features/account/domain/entity/account_entity.dart';
+import 'package:cinema/core/features/account/presentation/bloc/account_bloc.dart';
+import 'package:cinema/core/features/account/presentation/bloc/account_event.dart';
 import 'package:cinema/core/utils/localizations.dart';
 
 class InformationSection extends StatefulWidget {
-  AccountEntity entity;
+  AccountEntity currentEntity;
+  AccountEntity newEntity;
   InformationSection({
     Key? key,
-    required this.entity,
+    required this.currentEntity,
+    required this.newEntity,
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class InformationSection extends StatefulWidget {
 
 class _InformationSectionState extends State<InformationSection> {
   ThemeData get theme => Theme.of(context);
-  AccountEntity get entity => widget.entity;
+  AccountEntity get currentEntity => widget.currentEntity;
   AccountBloc get bloc => BlocProvider.of<AccountBloc>(context);
 
   OutlineInputBorder get outlineBorder => OutlineInputBorder(
@@ -46,24 +48,21 @@ class _InformationSectionState extends State<InformationSection> {
   TextEditingController emailController = TextEditingController();
   late Gender _selectedGender;
   late City _selectedCity;
-  late AccountEntity newEntity;
+  AccountEntity get newEntity => widget.newEntity;
 
   @override
   void initState() {
     super.initState();
-    fullnameController.text = entity.displayName ?? "";
-    dobController.text = (entity.dateOfBirth != null)
-        ? DateFormat("dd/MM/yyyy").format(entity.dateOfBirth!)
+    fullnameController.text = newEntity.displayName ?? "";
+    dobController.text = (newEntity.dateOfBirth != null)
+        ? DateFormat("dd/MM/yyyy").format(newEntity.dateOfBirth!)
         : "";
     phonenumberController.text =
-        (entity.phoneNumber != null) ? entity.phoneNumber! : "";
-    emailController.text = (entity.email != null) ? entity.email! : "";
-    _selectedGender = entity.gender ?? Gender.other;
-    _selectedCity = entity.city ?? City.hochiminh;
-    newEntity = entity.copyWith();
+        (newEntity.phoneNumber != null) ? newEntity.phoneNumber! : "";
+    emailController.text = (newEntity.email != null) ? newEntity.email! : "";
+    _selectedGender = newEntity.gender ?? Gender.other;
+    _selectedCity = newEntity.city ?? City.hochiminh;
   }
-
-  bool _isEntityChanged = false;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +105,10 @@ class _InformationSectionState extends State<InformationSection> {
       title: translates(context).fullname,
       rightWidget: IntrinsicWidth(
         child: Container(
-          constraints: const BoxConstraints(maxHeight: 50, minHeight: 50),
+          constraints: BoxConstraints(
+              maxHeight: 50,
+              minHeight: 50,
+              maxWidth: MediaQuery.of(context).size.width / 2),
           child: TextField(
             controller: fullnameController,
             keyboardType: TextInputType.name,
@@ -167,7 +169,7 @@ class _InformationSectionState extends State<InformationSection> {
                   setState(() {
                     print("DOB changed");
                     dobController.text = result;
-                    entity.dateOfBirth = pickedDate!;
+                    newEntity.dateOfBirth = pickedDate!;
                   });
                 }
               },
@@ -189,7 +191,10 @@ class _InformationSectionState extends State<InformationSection> {
             keyboardType: TextInputType.phone,
             textAlign: TextAlign.end,
             style: textStyle,
+            readOnly: (currentEntity.phoneNumber != null),
+            maxLength: 10,
             decoration: InputDecoration(
+                counterText: '',
                 contentPadding: const EdgeInsets.only(
                     left: 12, top: 8, right: 12, bottom: 10),
                 isCollapsed: true,
@@ -225,9 +230,13 @@ class _InformationSectionState extends State<InformationSection> {
       title: translates(context).email,
       rightWidget: IntrinsicWidth(
         child: Container(
-          constraints: const BoxConstraints(maxHeight: 50, minHeight: 50),
+          constraints: BoxConstraints(
+              maxHeight: 50,
+              minHeight: 50,
+              maxWidth: MediaQuery.of(context).size.width / 2),
           child: TextField(
             controller: emailController,
+            readOnly: (currentEntity.email != null),
             keyboardType: TextInputType.emailAddress,
             textAlign: TextAlign.end,
             style: textStyle,
@@ -339,6 +348,7 @@ class _InformationSectionState extends State<InformationSection> {
             onChanged: (newValue) {
               setState(() {
                 if (newValue != null) {
+                  _selectedCity = newValue;
                   newEntity.city = newValue;
                 }
               });
@@ -359,18 +369,16 @@ class _InformationSectionState extends State<InformationSection> {
   }
 
   Widget _buildSaveButton() {
-    return (entity == newEntity)
+    return (currentEntity == newEntity)
         ? const SizedBox(
-            height: 50,
+            height: 48,
           )
         : CustomizeButton(
             text: translates(context).save,
             textStyle: theme.textTheme.bodyLarge!
                 .copyWith(fontWeight: FontWeight.w700),
-            onPressed: () {
-              bloc.add(UpdateAccountInfoEvent(
-                  oldEntity: entity, newEntity: newEntity));
-            },
+            onPressed: () =>
+                bloc.add(UpdateAccountInfoEvent(newEntity: newEntity)),
           );
   }
 }

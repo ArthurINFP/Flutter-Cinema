@@ -3,6 +3,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cinema/core/common/bloc/app_bloc/app_bloc.dart';
 import 'package:cinema/core/features/account/presentation/account_screen_route.dart';
 import 'package:cinema/core/features/login/presentation/login_screen_route.dart';
 import 'package:cinema/core/features/login/presentation/views/login_screen.dart';
@@ -33,11 +34,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   ThemeData get theme => Theme.of(context);
   HomeBloc get bloc => BlocProvider.of<HomeBloc>(context);
+  AppBloc get appBloc => BlocProvider.of<AppBloc>(context);
 
   @override
   void initState() {
+    // FirebaseAuth.instance.signOut();
     super.initState();
     bloc.add(GetUpcomingAndNowPlayingMovieEvent());
+    print("Init Home here");
   }
 
   void signOutUser() async {
@@ -47,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("Build Home again");
     return BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
           if (state is LoadingHomeState) {
@@ -234,8 +239,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 180,
                 memCacheHeight: 400,
                 height: 265,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
+                placeholder: (context, url) => const Center(
+                    child: SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator())),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
               (nowPlayingMovies[index].voteAverage != null)
@@ -264,7 +272,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Text(
-            nowPlayingMovies[index].genre?.first ?? "No genre",
+            nowPlayingMovies[index]
+                    .getGenre(translates(context).localeName)
+                    ?.first ??
+                "No genre",
             maxLines: 1,
             style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
           )
@@ -357,7 +368,9 @@ class _buildUpcomingCarouselState extends State<_buildUpcomingCarousel> {
         // child: Image.network(url!),
         child: CachedNetworkImage(
           imageUrl: url!,
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => const Center(
+              child: SizedBox(
+                  height: 30, width: 30, child: CircularProgressIndicator())),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),

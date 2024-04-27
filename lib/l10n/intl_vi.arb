@@ -48,5 +48,25 @@
     "youremail" : "Email của bạn",
     "hochiminhcity":"TP Hồ Chí Minh",
     "danangcity":"TP Đà Nẵng",
-    "hanoicity":"TP Hà Nội"
+    "hanoicity":"TP Hà Nội",
+    "deleteticket" : "Xóa vé",
+    "areyousure" : "Bạn có chắc chắn?",
+    "ok" : "Đồng ý",
+    "cancle" : "Hủy",
+    "changelanguage":"Đổi ngôn ngữ",
+    "localecode" : "vi",
+    "logout" : "Đăng xuất",
+    "success" : "Thành công",
+    "weakpassword" : "Mật khẩu yếu",
+    "emailalreadyinuse":"Email đã tồn tại",
+    "unknownerror": "Unknown error",
+    "failtoupdateavatar" : "Cập nhật avatar thất bại",
+    "cantfindaccount" : "Không tìm thấy tài khoản",
+    "signup": "Đăng ký",
+    "required" : "Bắt buộc",
+    "passwordlength" : "Ít nhất 8 ký tự",
+    "reenterpassword" : "Nhập lại mật khẩu",
+    "passwordnotmatch" : "Mật khẩu không giống nhau",
+    "inform": "Thông báo"
+    
 }

@@ -392,6 +392,120 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'TP Hà Nội'**
   String get hanoicity;
+
+  /// No description provided for @deleteticket.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa vé'**
+  String get deleteticket;
+
+  /// No description provided for @areyousure.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn?'**
+  String get areyousure;
+
+  /// No description provided for @ok.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đồng ý'**
+  String get ok;
+
+  /// No description provided for @cancle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hủy'**
+  String get cancle;
+
+  /// No description provided for @changelanguage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đổi ngôn ngữ'**
+  String get changelanguage;
+
+  /// No description provided for @localecode.
+  ///
+  /// In vi, this message translates to:
+  /// **'vi'**
+  String get localecode;
+
+  /// No description provided for @logout.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng xuất'**
+  String get logout;
+
+  /// No description provided for @success.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thành công'**
+  String get success;
+
+  /// No description provided for @weakpassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu yếu'**
+  String get weakpassword;
+
+  /// No description provided for @emailalreadyinuse.
+  ///
+  /// In vi, this message translates to:
+  /// **'Email đã tồn tại'**
+  String get emailalreadyinuse;
+
+  /// No description provided for @unknownerror.
+  ///
+  /// In vi, this message translates to:
+  /// **'Unknown error'**
+  String get unknownerror;
+
+  /// No description provided for @failtoupdateavatar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cập nhật avatar thất bại'**
+  String get failtoupdateavatar;
+
+  /// No description provided for @cantfindaccount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy tài khoản'**
+  String get cantfindaccount;
+
+  /// No description provided for @signup.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng ký'**
+  String get signup;
+
+  /// No description provided for @required.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bắt buộc'**
+  String get required;
+
+  /// No description provided for @passwordlength.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ít nhất 8 ký tự'**
+  String get passwordlength;
+
+  /// No description provided for @reenterpassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nhập lại mật khẩu'**
+  String get reenterpassword;
+
+  /// No description provided for @passwordnotmatch.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu không giống nhau'**
+  String get passwordnotmatch;
+
+  /// No description provided for @inform.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thông báo'**
+  String get inform;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

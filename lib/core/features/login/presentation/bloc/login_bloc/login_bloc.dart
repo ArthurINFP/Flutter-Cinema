@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:cinema/core/features/login/domain/usecases/login_usecase.dart';
 import 'package:cinema/core/features/login/domain/usecases/login_usecases.implement.dart';
-import 'package:cinema/core/features/login/presentation/bloc/login_event.dart';
-import 'package:cinema/core/features/login/presentation/bloc/login_state.dart';
+import 'package:cinema/core/features/login/presentation/bloc/login_bloc/login_event.dart';
+import 'package:cinema/core/features/login/presentation/bloc/login_bloc/login_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {

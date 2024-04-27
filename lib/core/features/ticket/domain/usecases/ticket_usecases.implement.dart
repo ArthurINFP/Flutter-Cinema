@@ -5,36 +5,38 @@ import 'package:cinema/core/features/ticket/domain/repository/ticket_repository.
 import 'package:cinema/core/features/ticket/domain/usecases/ticket_usecases.dart';
 
 class TicketUsecasesImplement extends TicketUsecases {
-  final repository =
+  final _repository =
       TicketRepositoryImplement(datasource: TicketLocalDatasourceImplement());
   @override
-  void clearData() {
-    repository.clearData();
+  Future<void> clearData() {
+    return _repository.clearData();
   }
 
   @override
-  void createTicket(TicketEntity entity) {
-    repository.createTicket(TicketModel.fromEntity(entity));
+  Future<void> createTicket(TicketEntity entity) {
+    return _repository.createTicket(TicketModel.fromEntity(entity));
   }
 
   @override
-  void deleteTicket(String ticketId) {}
+  Future<bool> deleteTicket(String ticketId) {
+    return _repository.deleteTicket(ticketId);
+  }
 
   @override
   Future<TicketEntity?> queryTicket({required String ticketId}) async {
-    return (await repository.queryTicket(ticketId: ticketId))?.toEntity();
+    return (await _repository.queryTicket(ticketId: ticketId))?.toEntity();
   }
 
   @override
   Future<List<TicketEntity>> queryTickets({required String userId}) async {
-    return (await repository.queryTickets(userId: userId))
+    return (await _repository.queryTickets(userId: userId))
         .map((e) => e.toEntity())
         .toList();
   }
 
   @override
   Future<TicketEntity?> updateTicket(TicketEntity entity) async {
-    return (await repository.updateTicket(TicketModel.fromEntity(entity)))
+    return (await _repository.updateTicket(TicketModel.fromEntity(entity)))
         ?.toEntity();
   }
 }

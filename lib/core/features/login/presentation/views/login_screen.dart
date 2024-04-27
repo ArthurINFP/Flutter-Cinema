@@ -1,9 +1,10 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cinema/core/common/constants/assets.dart';
 import 'package:cinema/core/features/home/home_screen_route.dart';
-import 'package:cinema/core/features/login/presentation/bloc/login_bloc.dart';
-import 'package:cinema/core/features/login/presentation/bloc/login_event.dart';
-import 'package:cinema/core/features/login/presentation/bloc/login_state.dart';
+import 'package:cinema/core/features/login/presentation/bloc/login_bloc/login_bloc.dart';
+import 'package:cinema/core/features/login/presentation/bloc/login_bloc/login_event.dart';
+import 'package:cinema/core/features/login/presentation/bloc/login_bloc/login_state.dart';
+import 'package:cinema/core/features/login/presentation/register_screen_route.dart';
 import 'package:cinema/core/utils/localizations.dart';
 import 'package:cinema/core/themes/theme_data.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
           EasyLoading.show();
         } else if (state is SuccessfulLoginState) {
           EasyLoading.dismiss();
-          showOkAlertDialog(
-            context: context,
-            message: "Đăng nhập thành công",
-          );
+          (state.message != null)
+              ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(state.message!),
+                  behavior: SnackBarBehavior.floating,
+                ))
+              : null;
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacementNamed(context, HomeScreenRoute.screenName);
         } else if (state is FailedLoginState) {
@@ -46,10 +49,10 @@ class _LoginScreenState extends State<LoginScreen> {
           _errorMessage = state.message;
           showOkAlertDialog(context: context, message: state.message);
         } else if (state is FailedLoginState) {
-          EasyLoading.dismiss;
+          EasyLoading.dismiss();
           showOkAlertDialog(context: context, message: state.message);
         } else {
-          EasyLoading.dismiss;
+          EasyLoading.dismiss();
           showOkAlertDialog(
               context: context, message: 'Something went wrong 2');
         }
@@ -75,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 passwordInputField(context),
                 const SizedBox(height: 15),
                 // Forgot Password Text
-                forgetPaswordButton(context),
+                forgetPaswordAndSignUpRow(context),
                 const SizedBox(height: 15),
                 // Login Button
                 loginButton(),
@@ -189,10 +192,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Row forgetPaswordButton(BuildContext context) {
+  Row forgetPaswordAndSignUpRow(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, RegisterScreenRoute.screenName);
+          },
+          child: Text(
+            translates(context).signup,
+          ),
+        ),
         TextButton(
           onPressed: () {},
           child: Text(

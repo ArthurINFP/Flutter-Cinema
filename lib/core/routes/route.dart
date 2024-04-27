@@ -5,9 +5,12 @@ import 'package:cinema/core/features/account/presentation/views/account_screen.d
 import 'package:cinema/core/features/home/home_screen_route.dart';
 import 'package:cinema/core/features/home/presentation/bloc/home_bloc.dart';
 import 'package:cinema/core/features/home/presentation/views/home_screen.dart';
-import 'package:cinema/core/features/login/presentation/bloc/login_bloc.dart';
+import 'package:cinema/core/features/login/presentation/bloc/login_bloc/login_bloc.dart';
+import 'package:cinema/core/features/login/presentation/bloc/register_bloc/register_bloc.dart';
 import 'package:cinema/core/features/login/presentation/login_screen_route.dart';
+import 'package:cinema/core/features/login/presentation/register_screen_route.dart';
 import 'package:cinema/core/features/login/presentation/views/login_screen.dart';
+import 'package:cinema/core/features/login/presentation/views/register_screen.dart';
 import 'package:cinema/core/features/movie_detail/movie_detail_screen_route.dart';
 import 'package:cinema/core/features/movie_detail/presentation/bloc/movie_detail_bloc.dart';
 import 'package:cinema/core/features/movie_detail/presentation/views/movie_detail_screen.dart';
@@ -48,10 +51,13 @@ class RouteGenerator {
             );
           },
         );
-      case TestScreen.screenName:
+      case RegisterScreenRoute.screenName:
         return MaterialPageRoute(
           builder: (context) {
-            return const TestScreen();
+            return BlocProvider(
+              create: (context) => RegisterBloc(),
+              child: const RegisterScreen(),
+            );
           },
         );
       case TicketScreenRoute.screenName:

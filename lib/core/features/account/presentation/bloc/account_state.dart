@@ -1,49 +1,38 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:cinema/core/common/model/bloc_status_state.dart';
 import 'package:cinema/core/features/account/domain/entity/account_entity.dart';
+import 'package:cinema/core/features/ticket/domain/entities/ticket_entity.dart';
 
-abstract class AccountState {}
+class AccountState {
+  final BlocStatusState status;
+  final AccountEntity? currentEntity;
+  final AccountEntity? newEntity;
+  final List<TicketEntity>? ticketEntities;
+  final String? message;
 
-class InitAccountState extends AccountState {}
-
-class LoadingAccountState extends AccountState {}
-
-class SuccessAccountState extends AccountState {
-  AccountEntity entity;
-  String? message;
-  SuccessAccountState({
-    required this.entity,
+  AccountState({
+    required this.status,
+    this.currentEntity,
+    this.newEntity,
+    this.ticketEntities,
     this.message,
   });
-}
 
-class LoadingUpdateAccountState extends AccountState {
-  AccountEntity newEntity;
-  LoadingUpdateAccountState({
-    required this.newEntity,
-  });
-}
-
-class UpdateSuccessfullyAcountState extends AccountState {
-  AccountEntity newEntity;
-  UpdateSuccessfullyAcountState({
-    required this.newEntity,
-  });
-}
-
-class FailedUpdateAccountState extends AccountState {
-  AccountEntity oldEntity;
-  String message;
-
-  FailedUpdateAccountState({
-    required this.oldEntity,
-    required this.message,
-  });
-}
-
-class FailedAccountState extends AccountState {
-  String message;
-  FailedAccountState({
-    required this.message,
-  });
+  // CopyWith method
+  AccountState copyWith({
+    required BlocStatusState status,
+    AccountEntity? currentEntity,
+    AccountEntity? newEntity,
+    List<TicketEntity>? ticketEntities,
+    String? message,
+  }) {
+    return AccountState(
+      status: status,
+      currentEntity: currentEntity ?? this.currentEntity,
+      ticketEntities: ticketEntities ?? this.ticketEntities,
+      newEntity: newEntity ?? this.newEntity,
+      message: message ?? this.message,
+    );
+  }
 }

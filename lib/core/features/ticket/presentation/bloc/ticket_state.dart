@@ -9,8 +9,10 @@ class LoadingTicketState extends TicketState {}
 
 class SuccessTicketState extends TicketState {
   TicketEntity entity;
+  String? message;
   SuccessTicketState({
     required this.entity,
+    this.message,
   });
 }
 

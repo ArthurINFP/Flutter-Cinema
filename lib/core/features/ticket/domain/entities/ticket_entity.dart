@@ -5,6 +5,7 @@ class TicketEntity {
   int? runtime;
   String? theater;
   String? filmFormat;
+  String? photoURL;
   DateTime? time;
   List<String>? seats;
   double? unitPrice;
@@ -17,6 +18,7 @@ class TicketEntity {
     this.runtime,
     this.theater,
     this.filmFormat,
+    this.photoURL,
     this.time,
     this.seats,
     this.unitPrice,

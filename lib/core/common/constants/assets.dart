@@ -19,9 +19,11 @@ class SvgAssets {
   final String icRightHalfEllipse = 'assets/svg/RightHalfEllipse.svg';
   final String icEllipse = 'assets/svg/Ellipse.svg';
   final String icFlagsVN = 'assets/svg/icFlagsVN.svg';
+  final String icFlagsEN = 'assets/svg/icFlagsEN.svg';
 }
 
 class ImageAssets {
   final String icGoogleLogo2 = 'assets/icons/google2.png';
   final String icTreeAvatar = 'assets/icons/tree.jpg';
+  final String icCinema = 'assets/icons/icCinema.jpg';
 }

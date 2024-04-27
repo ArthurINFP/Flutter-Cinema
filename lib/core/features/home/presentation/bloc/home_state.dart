@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cinema/core/features/account/domain/entity/account_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cinema/core/features/home/data/models/movie.dart';
@@ -10,7 +11,7 @@ class InitialHomeState extends HomeState {}
 class SuccessfulHomeState extends HomeState {
   List<Movie> upComingMovies;
   List<Movie> nowPlayingMovies;
-  User? user;
+  AccountEntity? user;
 
   SuccessfulHomeState({
     required this.upComingMovies,

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cinema/core/common/enums/city.dart';
 import 'package:cinema/core/common/enums/gender.dart';
 
@@ -70,5 +71,10 @@ class AccountEntity {
         gender.hashCode ^
         city.hashCode ^
         dateOfBirth.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'AccountEntity(uid: $uid, displayName: $displayName, email: $email, phoneNumber: $phoneNumber, photoURL: $photoURL, dateOfBirth: $dateOfBirth, gender: $gender, city: $city)';
   }
 }

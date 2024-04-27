@@ -30,9 +30,11 @@ class TicketBloc extends Bloc<TicketEvent, TicketState> {
       CreateTicketEvent event, Emitter<TicketState> emit) async {
     emit(LoadingTicketState());
     try {
-      useCases.createTicket(event.entity);
+      final result = await useCases.createTicket(event.entity);
+      emit(SuccessTicketState(entity: event.entity, message: "Success"));
     } catch (e) {
       print(e);
+      emit(FailedTicketState(message: "Failed to create ticket"));
     }
   }
 }

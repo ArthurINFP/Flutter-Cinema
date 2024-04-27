@@ -48,7 +48,8 @@ class MovieDetailUsecasesImplement extends MovieDetailUsecases {
       certificate: releaseInfo?.getUsCertification() ?? "Updating",
       youtubeName: trailers?.getOfficialTrailer()?.name ?? "",
       youtubeUrl: trailers?.getOfficialTrailer()?.key ?? "VP4unOtFwSU",
-      posterUrl: detail?.posterPath ??
+      posterUrl: "https://image.tmdb.org/t/p/original" +
+              "${detail?.posterPath}" ??
           "https://ih1.redbubble.net/image.1893341687.8294/fposter,small,wall_texture,product,750x1000.jpg",
       director: cast?.directorName ?? "Updating",
     );

@@ -153,4 +153,61 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get hanoicity => 'TP Hà Nội';
+
+  @override
+  String get deleteticket => 'Xóa vé';
+
+  @override
+  String get areyousure => 'Bạn có chắc chắn?';
+
+  @override
+  String get ok => 'Đồng ý';
+
+  @override
+  String get cancle => 'Hủy';
+
+  @override
+  String get changelanguage => 'Đổi ngôn ngữ';
+
+  @override
+  String get localecode => 'vi';
+
+  @override
+  String get logout => 'Đăng xuất';
+
+  @override
+  String get success => 'Thành công';
+
+  @override
+  String get weakpassword => 'Mật khẩu yếu';
+
+  @override
+  String get emailalreadyinuse => 'Email đã tồn tại';
+
+  @override
+  String get unknownerror => 'Unknown error';
+
+  @override
+  String get failtoupdateavatar => 'Cập nhật avatar thất bại';
+
+  @override
+  String get cantfindaccount => 'Không tìm thấy tài khoản';
+
+  @override
+  String get signup => 'Đăng ký';
+
+  @override
+  String get required => 'Bắt buộc';
+
+  @override
+  String get passwordlength => 'Ít nhất 8 ký tự';
+
+  @override
+  String get reenterpassword => 'Nhập lại mật khẩu';
+
+  @override
+  String get passwordnotmatch => 'Mật khẩu không giống nhau';
+
+  @override
+  String get inform => 'Thông báo';
 }

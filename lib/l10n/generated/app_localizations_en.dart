@@ -153,4 +153,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hanoicity => 'Ha Noi city';
+
+  @override
+  String get deleteticket => 'Delete Ticket';
+
+  @override
+  String get areyousure => 'Are you sure?';
+
+  @override
+  String get ok => 'Ok';
+
+  @override
+  String get cancle => 'Cancle';
+
+  @override
+  String get changelanguage => 'Change Language';
+
+  @override
+  String get localecode => 'en';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get success => 'Success';
+
+  @override
+  String get weakpassword => 'Weak password';
+
+  @override
+  String get emailalreadyinuse => 'Email already exist';
+
+  @override
+  String get unknownerror => 'Unknown error';
+
+  @override
+  String get failtoupdateavatar => 'Fail to update Avatar';
+
+  @override
+  String get cantfindaccount => 'Can\'t find acocunt';
+
+  @override
+  String get signup => 'Sign-up';
+
+  @override
+  String get required => 'Required';
+
+  @override
+  String get passwordlength => 'At least 8 characters';
+
+  @override
+  String get reenterpassword => 'Re-enter Password';
+
+  @override
+  String get passwordnotmatch => 'Passwords do not match';
+
+  @override
+  String get inform => 'Inform';
 }

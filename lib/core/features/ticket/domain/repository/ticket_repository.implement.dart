@@ -10,16 +10,18 @@ class TicketRepositoryImplement extends TicketRepository {
     datasource.initDB();
   }
   @override
-  void clearData() {}
-
-  @override
-  void createTicket(TicketModel model) {
-    datasource.createTicket(model);
+  Future<void> clearData() {
+    return datasource.clearData();
   }
 
   @override
-  void deleteTicket(String ticketId) {
-    datasource.deleteTicket(ticketId);
+  Future<void> createTicket(TicketModel model) {
+    return datasource.createTicket(model);
+  }
+
+  @override
+  Future<bool> deleteTicket(String ticketId) {
+    return datasource.deleteTicket(ticketId);
   }
 
   @override

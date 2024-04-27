@@ -1,6 +1,8 @@
+import 'package:cinema/core/common/bloc/app_bloc/app_bloc.dart';
+import 'package:cinema/core/common/bloc/app_bloc/app_state.dart';
 import 'package:cinema/core/features/home/presentation/bloc/home_bloc.dart';
 import 'package:cinema/core/features/home/presentation/views/home_screen.dart';
-import 'package:cinema/core/features/login/presentation/bloc/login_bloc.dart';
+import 'package:cinema/core/features/login/presentation/bloc/login_bloc/login_bloc.dart';
 import 'package:cinema/core/features/login/presentation/views/login_screen.dart';
 
 import 'package:cinema/core/routes/route.dart';
@@ -34,30 +36,28 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    BlocProvider? myBlocProvider;
-    FirebaseAuth.instance.authStateChanges().listen(
-      (user) {
-        if (user == null) {
-          myBlocProvider = BlocProvider(
-              create: (context) => LoginBloc(), child: const LoginScreen());
-        } else {
-          myBlocProvider = BlocProvider(
-              create: (context) => HomeBloc(), child: HomeScreen());
-        }
-      },
-    );
     print("App build here");
-    return MaterialApp(
-      theme: darkTheme,
-      debugShowCheckedModeBanner: false,
-      builder: EasyLoading.init(),
-      darkTheme: darkTheme,
-      home: myBlocProvider,
-      // home: BlocProvider(create: (context) => HomeBloc(), child: HomeScreen()),
-      onGenerateRoute: RouteGenerator.generate,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale('en'),
+    return BlocProvider(
+      create: (context) => AppBloc(),
+      child: BlocBuilder<AppBloc, AppState>(
+        builder: (context, state) {
+          return MaterialApp(
+            theme: darkTheme,
+            debugShowCheckedModeBanner: false,
+            builder: EasyLoading.init(),
+            darkTheme: darkTheme,
+            home: (FirebaseAuth.instance.currentUser != null)
+                ? BlocProvider(
+                    create: (context) => HomeBloc(), child: HomeScreen())
+                : BlocProvider(
+                    create: (context) => LoginBloc(), child: LoginScreen()),
+            onGenerateRoute: RouteGenerator.generate,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: state.locale ?? const Locale('en'),
+          );
+        },
+      ),
     );
   }
 }

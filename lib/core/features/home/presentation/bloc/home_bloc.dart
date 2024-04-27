@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cinema/core/features/account/domain/usecases/account_usecases.implement.dart';
 import 'package:cinema/core/features/home/data/models/movie.dart';
 import 'package:cinema/core/features/home/domain/repository/home_repository.implement.dart';
 import 'package:cinema/core/features/home/domain/usecases/home_usecases.dart';
@@ -16,9 +17,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         _onGetUpcomingAndNowPlayingMovieEvent);
   }
 
-  final HomeUseCases useCases =
+  final HomeUseCases _homeUseCases =
       HomeUseCasesImplement(repository: HomeRepositoryImplement());
-  final LoginUsecase _loginUsecase = LoginUsecaseImplement();
+  // final LoginUsecase _loginUsecase = LoginUsecaseImplement();
+  final AccountUsecasesImplement _accountUsecase = AccountUsecasesImplement();
 
   FutureOr<void> _onGetUpcomingAndNowPlayingMovieEvent(
       GetUpcomingAndNowPlayingMovieEvent event, Emitter<HomeState> emit) async {
@@ -26,9 +28,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await Future.delayed(const Duration(seconds: 2));
 
     try {
-      final nowPlayingMovies = useCases.getNowPlayingMovies();
-      final upComingMovies = useCases.getUpcomingMovies();
-      final currentUser = await _loginUsecase.getCurrentUserInfo();
+      final nowPlayingMovies = _homeUseCases.getNowPlayingMovies();
+      final upComingMovies = _homeUseCases.getUpcomingMovies();
+      // final currentUser = await _loginUsecase.getCurrentUserInfo();
+      final currentUser = await _accountUsecase.getAccountInfo();
       var response = await Future.wait([nowPlayingMovies, upComingMovies]);
       if ((response[0] != null) && (response[1] != null)) {
         emit(SuccessfulHomeState(

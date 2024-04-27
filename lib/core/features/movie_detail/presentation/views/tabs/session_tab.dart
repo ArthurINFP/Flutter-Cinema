@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cinema/core/features/ticket/domain/entities/ticket_entity.dart';
 import 'package:cinema/core/features/ticket/ticket_screen_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -206,10 +206,14 @@ class _SessionTabState extends State<SessionTab> {
     return GestureDetector(
       onTap: () {
         final TicketEntity ticketEntity = TicketEntity(
+          id: widget.movieId,
+          createAt: DateTime.now(),
+          userId: FirebaseAuth.instance.currentUser!.uid,
           title: widget.movieDetailEntity.title,
           runtime: widget.movieDetailEntity.runtime,
           theater: entity.theater,
           filmFormat: entity.filmFormat,
+          photoURL: widget.movieDetailEntity.posterUrl,
           time: entity.sessionTime,
           seats: ["F0", "F1"],
           unitPrice: entity.adultPrice,

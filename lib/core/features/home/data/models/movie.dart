@@ -19,10 +19,10 @@ class Movie {
   @JsonKey(name: 'vote_average')
   double? voteAverage;
 
-  List<String?>? get genre {
+  List<String?>? getGenre(String languageCode) {
     final genreString = genreIds
         ?.map(
-          (e) => Genre.getGenreById(e)?.getGenreString("en"),
+          (e) => Genre.getGenreById(e)?.getGenreString(languageCode),
         )
         .toList();
 

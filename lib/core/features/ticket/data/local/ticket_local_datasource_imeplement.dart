@@ -2,6 +2,7 @@ import 'package:cinema/core/features/ticket/data/local/ticket_local_datasource.d
 import 'package:cinema/core/features/ticket/data/models/ticket_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:uuid/uuid.dart';
 
 class TicketLocalDatasourceImplement extends TicketLocalDatasource {
   static Database? _database;
@@ -14,12 +15,13 @@ class TicketLocalDatasourceImplement extends TicketLocalDatasource {
     CREATE TABLE Ticket(
       id TEXT PRIMARY KEY,
       title TEXT,
-      runtime REAL,
-      filmFormat TEXT,1
+      runtime INTEGER,
+      filmFormat TEXT,
       theater TEXT,
       time TEXT,
       seats TEXT,
       unitPrice REAL,
+      photoUrl TEXT,
       userId TEXT,
       createAt TEXT) 
       ''');
@@ -27,17 +29,19 @@ class TicketLocalDatasourceImplement extends TicketLocalDatasource {
   }
 
   @override
-  void createTicket(TicketModel model) async {
+  Future<void> createTicket(TicketModel model) async {
+    var uuid = Uuid();
+
     Database? db = await database;
-    await db.insert("Ticket", model.toJson());
+    await db.insert("Ticket", model.copyWith(id: uuid.v4()).toJson());
   }
 
   @override
-  void deleteTicket(String ticketId) async {
+  Future<bool> deleteTicket(String ticketId) async {
     Database? db = await database;
     final numberOfRow =
         await db.delete("Ticket", where: 'id = ?', whereArgs: [ticketId]);
-    print(numberOfRow);
+    return (numberOfRow == 1) ? true : false;
   }
 
   @override
@@ -57,7 +61,7 @@ class TicketLocalDatasourceImplement extends TicketLocalDatasource {
   }
 
   @override
-  void clearData() async {
+  Future<void> clearData() async {
     Database? db = await database;
     await db.delete('Ticket');
     return;

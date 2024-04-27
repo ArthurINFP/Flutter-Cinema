@@ -1,13 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cinema/core/common/constants/assets.dart';
 import 'package:cinema/core/common/widget/customize_button.dart';
 import 'package:cinema/core/features/ticket/presentation/bloc/ticket_bloc.dart';
 import 'package:cinema/core/features/ticket/presentation/bloc/ticket_event.dart';
+import 'package:cinema/core/features/ticket/presentation/bloc/ticket_state.dart';
 import 'package:cinema/core/utils/localizations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cinema/core/features/ticket/domain/entities/ticket_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
@@ -31,52 +34,66 @@ class _TicketScreenState extends State<TicketScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          translates(context).payforticket,
-          style: textTitleStyle,
-          textAlign: TextAlign.center,
-        ),
-      ),
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: theme.colorScheme.surface,
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16))),
-            child: Column(
-              children: [
-                _buildInformationSection(context),
-                _buildTearLine(),
-                PhoneInputField(context: context),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CustomizeButton(
-                          backgroundColor: theme.colorScheme.primary,
-                          borderRadius: 8,
-                          onPressed: () {
-                            bloc.add(CreateTicketEvent(entity: entity));
-                          },
-                          text: "Continue",
-                          height: 56,
-                          widget: double.infinity,
-                          textStyle:
-                              textTitleStyle!.copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+    return BlocListener<TicketBloc, TicketState>(
+      listener: (context, state) {
+        if (state is LoadingTicketState) {
+          EasyLoading.show();
+        } else if (state is SuccessTicketState) {
+          EasyLoading.dismiss();
+          showMyAlertDialog(context, state.message ?? "");
+
+          // Navigator.pop(context);
+        } else {
+          EasyLoading.dismiss();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            translates(context).payforticket,
+            style: textTitleStyle,
+            textAlign: TextAlign.center,
           ),
-        ],
+        ),
+        body: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: theme.colorScheme.surface,
+                  borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16))),
+              child: Column(
+                children: [
+                  _buildInformationSection(context),
+                  _buildTearLine(),
+                  PhoneInputField(context: context),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: CustomizeButton(
+                            backgroundColor: theme.colorScheme.primary,
+                            borderRadius: 8,
+                            onPressed: () {
+                              bloc.add(CreateTicketEvent(entity: entity));
+                            },
+                            text: "Continue",
+                            height: 56,
+                            widget: double.infinity,
+                            textStyle:
+                                textTitleStyle!.copyWith(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -251,4 +268,32 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
       ),
     );
   }
+}
+
+showMyAlertDialog(BuildContext context, String message) {
+  Widget okButton = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      TextButton(
+          onPressed: () async {
+            Navigator.pop(context, true);
+          },
+          child: Text(translates(context).ok)),
+    ],
+  );
+  AlertDialog alertDialog = AlertDialog(
+    title: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(message),
+      ],
+    ),
+    actions: [okButton],
+  );
+  showDialog(
+    context: context,
+    builder: (context) {
+      return alertDialog;
+    },
+  ).then((value) => Navigator.of(context).pop());
 }
