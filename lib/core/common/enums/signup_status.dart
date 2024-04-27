@@ -5,7 +5,8 @@ enum SignUpStatus {
   success,
   weakPassword,
   emailAlreadyInUse,
-  unknownError;
+  unknownError,
+  unknownError2;
 
   String getTranslated(BuildContext context) {
     switch (this) {
@@ -15,6 +16,8 @@ enum SignUpStatus {
         return translates(context).weakpassword;
       case SignUpStatus.emailAlreadyInUse:
         return translates(context).emailalreadyinuse;
+      case SignUpStatus.unknownError2:
+        return "Unknow error2";
       default:
         return translates(context).unknownerror;
     }

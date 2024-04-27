@@ -3,7 +3,7 @@ import 'package:cinema/core/common/enums/city.dart';
 import 'package:cinema/core/common/enums/gender.dart';
 
 class AccountEntity {
-  final String uid;
+  String uid;
   String? displayName;
   String? email;
   String? phoneNumber;

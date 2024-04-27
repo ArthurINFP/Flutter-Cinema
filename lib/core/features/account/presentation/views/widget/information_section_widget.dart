@@ -65,6 +65,15 @@ class _InformationSectionState extends State<InformationSection> {
   }
 
   @override
+  void dispose() {
+    fullnameController.dispose();
+    dobController.dispose();
+    phonenumberController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 40, left: 16),

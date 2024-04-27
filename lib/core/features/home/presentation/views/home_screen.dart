@@ -38,14 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // FirebaseAuth.instance.signOut();
     super.initState();
+    // logout();
     bloc.add(GetUpcomingAndNowPlayingMovieEvent());
     print("Init Home here");
   }
 
-  void signOutUser() async {
-    print("Sign-out");
+  void logout() async {
     await FirebaseAuth.instance.signOut();
   }
 
@@ -126,9 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SvgPicture.asset(Assets.svg.icProductLogo),
           _buildAppBarInfoItem(assets: Assets.svg.icLocation, label: 'TP.HCM'),
           GestureDetector(
-              onTap: () {
-                signOutUser();
-              },
+              onTap: () {},
               child: _buildAppBarInfoItem(
                   assets: Assets.svg.icLanguage, label: 'Eng')),
           BlocBuilder<HomeBloc, HomeState>(

@@ -28,6 +28,13 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _errorMessage;
 
   @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bloc = BlocProvider.of<LoginBloc>(context);
     return BlocConsumer<LoginBloc, LoginState>(

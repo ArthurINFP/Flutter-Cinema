@@ -46,7 +46,10 @@ class LoginRepositoryImplement extends LoginRepository {
     if (status == SignUpStatus.success) {
       await authDataSource.signInWithEmailnamePassword(
           email: entity.email!, password: password);
+
       if (image != null) {
+        final uid = getCurrentUserInfo();
+        entity.uid = uid!.uid;
         final url = await accountFirestoreDatasource.updateAvatar(image: image);
         entity.photoURL = url;
       }

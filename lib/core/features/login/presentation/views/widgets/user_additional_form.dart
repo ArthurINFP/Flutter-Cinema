@@ -35,8 +35,10 @@ class _AdditionalFormState extends State<AdditionalForm> {
   XFile? _image;
 
   @override
-  void initState() {
-    // dobController.text =
+  void dispose() {
+    _fullnameController.dispose();
+    dobController.dispose();
+    super.dispose();
   }
 
   @override

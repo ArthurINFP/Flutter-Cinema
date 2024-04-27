@@ -1,7 +1,6 @@
 import 'package:cinema/core/common/enums/signup_status.dart';
 import 'package:cinema/core/features/login/data/datasource/auth_remote_datasource.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRemoteDataSorceImplement extends AuthRemoteDataSource {
@@ -41,7 +40,7 @@ class AuthRemoteDataSorceImplement extends AuthRemoteDataSource {
   Future<SignUpStatus> createUserWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
-      FirebaseAuth.instance
+      await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       return SignUpStatus.success;
     } on FirebaseAuthException catch (e) {

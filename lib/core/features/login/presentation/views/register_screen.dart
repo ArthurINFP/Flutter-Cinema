@@ -1,5 +1,3 @@
-import 'package:cinema/core/common/enums/city.dart';
-import 'package:cinema/core/common/enums/gender.dart';
 import 'package:cinema/core/common/enums/signup_status.dart';
 import 'package:cinema/core/common/model/bloc_status_state.dart';
 import 'package:cinema/core/features/account/domain/entity/account_entity.dart';
@@ -10,7 +8,6 @@ import 'package:cinema/core/features/login/presentation/views/widgets/user_addit
 import 'package:cinema/core/features/login/presentation/views/widgets/user_detail_form.dart';
 import 'package:cinema/core/utils/localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
@@ -47,6 +44,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               : null;
         } else {
           EasyLoading.dismiss();
+          (state.status != null)
+              ? showMyAlertDialog(context, state.status!)
+              : null;
         }
       },
       child: Scaffold(
