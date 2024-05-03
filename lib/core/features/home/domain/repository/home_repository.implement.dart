@@ -9,10 +9,10 @@ class HomeRepositoryImplement extends HomeRepository {
   HomeRemoteDatasource repository = HomeRemoteDatasourceImplement();
   final HomeRestApi api = HomeRestApi(dioClient.dio);
   @override
-  Future<List<Movie>?> getNowPlayingMovies() async {
+  Future<List<Movie>?> getNowPlayingMovies(int page) async {
     // via Dio
     // return repository.getUpcomingMovies();
-    final response = await api.getNowPlayingMovies();
+    final response = await api.getNowPlayingMovies(page);
     return response.results;
   }
 

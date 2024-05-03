@@ -3,3 +3,5 @@
 abstract class HomeEvent {}
 
 class GetUpcomingAndNowPlayingMovieEvent extends HomeEvent {}
+
+class GetUpcomingNextPageEvent extends HomeEvent {}

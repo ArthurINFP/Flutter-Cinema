@@ -10,8 +10,8 @@ class HomeUseCasesImplement extends HomeUseCases {
     required this.repository,
   });
   @override
-  Future<List<Movie>?> getNowPlayingMovies() {
-    return repository.getNowPlayingMovies();
+  Future<List<Movie>?> getNowPlayingMovies(int page) {
+    return repository.getNowPlayingMovies(page);
   }
 
   @override

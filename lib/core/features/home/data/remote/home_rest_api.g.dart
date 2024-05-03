@@ -19,9 +19,9 @@ class _HomeRestApi implements HomeRestApi {
   String? baseUrl;
 
   @override
-  Future<MovieResponse> getNowPlayingMovies() async {
+  Future<MovieResponse> getNowPlayingMovies(int page) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio

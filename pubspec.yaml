@@ -34,6 +34,7 @@ dependencies:
   uuid: ^4.4.0
   image_picker: ^1.0.8
   firebase_storage: ^11.6.9
+  textfield_search: ^0.10.0
 
 dev_dependencies:
   flutter_test:

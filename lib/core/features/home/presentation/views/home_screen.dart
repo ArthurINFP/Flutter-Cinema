@@ -4,6 +4,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cinema/core/common/bloc/app_bloc/app_bloc.dart';
+import 'package:cinema/core/common/model/bloc_status_state.dart';
 import 'package:cinema/core/features/account/presentation/account_screen_route.dart';
 import 'package:cinema/core/features/login/presentation/login_screen_route.dart';
 import 'package:cinema/core/features/login/presentation/views/login_screen.dart';
@@ -35,13 +36,21 @@ class _HomeScreenState extends State<HomeScreen> {
   ThemeData get theme => Theme.of(context);
   HomeBloc get bloc => BlocProvider.of<HomeBloc>(context);
   AppBloc get appBloc => BlocProvider.of<AppBloc>(context);
+  final _scrollController = ScrollController();
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     // logout();
     bloc.add(GetUpcomingAndNowPlayingMovieEvent());
-    print("Init Home here");
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    super.dispose();
   }
 
   void logout() async {
@@ -50,14 +59,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _isLoading = false;
     print("Build Home again");
     return BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
-          if (state is LoadingHomeState) {
+          if (state.state == BlocStatusState.loading) {
             EasyLoading.show();
-          } else if (state is SuccessfulHomeState) {
+          } else if (state.state == BlocStatusState.success) {
             EasyLoading.dismiss();
-          } else if (state is FailedHomeState) {
+            _isLoading = false;
+            if (state.message != null) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.message!),
+                behavior: SnackBarBehavior.floating,
+              ));
+            }
+          } else if (state.state == BlocStatusState.failed) {
             EasyLoading.dismiss();
             showOkAlertDialog(context: context, message: state.message);
           } else {
@@ -75,17 +92,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildAppBar(),
                 Expanded(
                   child: SingleChildScrollView(
+                    controller: _scrollController,
                     child: Container(
                       color: theme.colorScheme.background,
                       child: Column(
                         children: [
                           BlocBuilder<HomeBloc, HomeState>(
                             builder: (context, state) {
-                              if (state is LoadingHomeState) {
+                              if (state.state == BlocStatusState.loading) {
                                 return Container();
-                              } else if (state is SuccessfulHomeState) {
+                              } else if (state.state ==
+                                  BlocStatusState.success) {
                                 return _buildUpcomingCarousel(
-                                    upComingMovies: state.upComingMovies);
+                                    upComingMovies: state.upComingMovies!);
                               } else {
                                 return SvgPicture.asset(
                                     Assets.svg.icEmptyPopcon);
@@ -94,17 +113,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           BlocBuilder<HomeBloc, HomeState>(
                             builder: (context, state) {
-                              if (state is LoadingHomeState) {
+                              if (state.state == BlocStatusState.loading) {
                                 return Container();
-                              } else if (state is SuccessfulHomeState) {
+                              } else if (state.state ==
+                                  BlocStatusState.success) {
                                 return _buildNowInCinemaGridView(
-                                    nowPlayingMovies: state.nowPlayingMovies);
+                                    nowPlayingMovies: state.nowPlayingMovies!);
                               } else {
                                 return SvgPicture.asset(
                                     Assets.svg.icEmptyPopcon);
                               }
                             },
                           ),
+                          (_isLoading)
+                              ? const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: CircularProgressIndicator()),
+                                )
+                              : Container()
                         ],
                       ),
                     ),
@@ -130,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   assets: Assets.svg.icLanguage, label: 'Eng')),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              if (state is SuccessfulHomeState) {
+              if (state.state == BlocStatusState.success) {
                 if (state.user != null) {
                   return GestureDetector(
                     onTap: () => Navigator.pushNamed(
@@ -194,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style:
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SvgPicture.asset(Assets.svg.icSearch)
+              GestureDetector(child: SvgPicture.asset(Assets.svg.icSearch))
             ],
           ),
         ),
@@ -272,13 +299,25 @@ class _HomeScreenState extends State<HomeScreen> {
             nowPlayingMovies[index]
                     .getGenre(translates(context).localeName)
                     ?.first ??
-                "No genre",
+                "",
             maxLines: 1,
             style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
           )
         ],
       ),
     );
+  }
+
+  void _onScroll() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    if (!_isLoading && currentScroll >= maxScroll * 0.8) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      bloc.add(GetUpcomingNextPageEvent());
+    }
   }
 }
 
